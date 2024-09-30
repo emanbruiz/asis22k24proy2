@@ -20,8 +20,8 @@ namespace Interfac_V3
             {
                 timer1.Stop();
                 this.Hide();
-               // FormModulos b = new FormModulos();
-                //b.Show();
+                FormModulos b = new FormModulos();
+                b.Show();
                 //b.ShowDialog();
             }
         }

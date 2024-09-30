@@ -38,7 +38,7 @@ namespace Capa_Vista_Reporteria
         {
             string idayuda = "2";
             string Ruta = controlador.MRuta(idayuda);
-            string sRutaProyecto = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\..\..\"));
+            string sRutaProyecto = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\..\"));
             string AsRuta = Path.Combine(sRutaProyecto, "Ayuda", "AyudaReportes", Ruta);
             string AsIndice = controlador.MIndice(idayuda);
 

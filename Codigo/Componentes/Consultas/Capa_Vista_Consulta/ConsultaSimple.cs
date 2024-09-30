@@ -78,7 +78,7 @@ namespace Capa_Vista_Consulta
         {
             string idayuda = "5";
             string Ruta = csControlador.MRuta(idayuda);
-            string sRutaProyecto = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\..\..\"));
+            string sRutaProyecto = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\..\"));
             string AsRuta = Path.Combine(sRutaProyecto, "Ayuda", "ayudasConsultaSimple", Ruta);
             string AsIndice = csControlador.MIndice(idayuda);
 

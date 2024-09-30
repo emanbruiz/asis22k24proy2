@@ -445,6 +445,13 @@ namespace Capa_Vista_Seguridad
 
         }
 
+        private void meetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Meet meet = new Meet(idUsuario);
+            meet.MdiParent = this;
+            meet.Show();
+        }
+
         //------------------------------------------ Fin KATERYN DE LEON y Gabriela Suc ------------------------------------------
 
 

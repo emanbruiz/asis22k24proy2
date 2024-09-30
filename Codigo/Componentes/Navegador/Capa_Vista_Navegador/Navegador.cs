@@ -2524,7 +2524,7 @@ namespace Capa_Vista_Navegador
             try
             {
                 // Obtener el directorio raíz del proyecto subiendo suficientes niveles
-                string sProjectRootPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\..\.."));
+                string sProjectRootPath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\..\.."));
 
                 // Combinar la ruta base con la carpeta "Ayuda\AyudaHTML"
                 string sAyudaPath = Path.Combine(sProjectRootPath, "Ayuda", "Ayuda_Navegador", sRutaAyuda);
