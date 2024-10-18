@@ -11,7 +11,8 @@ namespace Capa_Modelo_Navegador
     public class sentencias
     {
         conexion cn = new conexion();
-
+        private OdbcTransaction transaction;
+        private OdbcConnection connection;
         //******************************************** CODIGO HECHO POR BRAYAN HERNANDEZ ***************************** 
         // Método que llena una tabla con datos relacionados a otra tabla si es necesario.
         public OdbcDataAdapter LlenaTbl(string sTabla, List<Tuple<string, string, string, string>> relacionesForaneas)
@@ -896,6 +897,161 @@ namespace Capa_Modelo_Navegador
             return datosExtra;
         }
 
+        public string ObtenerValorCampo(string tabla, string campo, string clavePrimaria, string valorClavePrimaria)
+        {
+            string valor = "";
+            try
+            {
+                // Ajustamos la consulta para que busque en base a la clave primaria específica
+                string query = $"SELECT {campo} FROM {tabla} WHERE {clavePrimaria} = {valorClavePrimaria} AND estado = 1 LIMIT 1;";
+                OdbcCommand command = new OdbcCommand(query, cn.ProbarConexion());
+                OdbcDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    valor = reader[campo].ToString();  // Se obtiene el valor del campo
+                }
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al obtener el valor del campo: " + ex.Message);
+            }
+            return valor;
+        }
+
+
+        public void ActualizarCampo(string tabla, string campo, string nuevoValor, string clavePrimaria, string valorClavePrimaria)
+        {
+            try
+            {
+                // Construir la consulta UPDATE usando la clave primaria para identificar el registro correcto
+                string query = $"UPDATE {tabla} SET {campo} = {nuevoValor} WHERE {clavePrimaria} = {valorClavePrimaria} AND estado = 1;";
+
+                // Ejecutar la consulta
+                using (OdbcCommand command = new OdbcCommand(query, cn.ProbarConexion()))
+                {
+                    command.ExecuteNonQuery();
+                }
+
+                Console.WriteLine("Campo actualizado exitosamente.");
+                Console.WriteLine(" Query generado: " + query);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al actualizar el campo: " + ex.Message);
+            }
+        }
+
+
+
+
+        // Capa Modelo: sentencias
+        public string ObtenerTipoCampo(string tabla, string campo)
+        {
+            string tipoCampo = "";
+            OdbcConnection conn = null;
+
+            try
+            {
+                conn = cn.ProbarConexion();
+                string sQuery = $"DESCRIBE {tabla} {campo};"; // Comando SQL para obtener la descripción del campo
+                OdbcCommand command = new OdbcCommand(sQuery, conn);
+                OdbcDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    tipoCampo = reader.GetString(1); // Tipo de dato está en la segunda columna (índice 1)
+                }
+
+                reader.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al obtener el tipo de campo {campo} en la tabla {tabla}: {ex.Message}");
+            }
+            finally
+            {
+                if (conn != null && conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
+
+            return tipoCampo; // Retorna el tipo de dato (ejemplo: int, varchar, etc.)
+        }
+        public void IniciarTransaccion()
+        {
+            connection = cn.ProbarConexion();
+            transaction = connection.BeginTransaction();
+        }
+
+        // Método para ejecutar una consulta dentro de una transacción
+        public void EjecutarQueryTransaccion(string sQuery)
+        {
+            try
+            {
+                OdbcCommand command = new OdbcCommand(sQuery, connection, transaction);
+                command.ExecuteNonQuery();
+            }
+            catch (OdbcException ex)
+            {
+                Console.WriteLine("Error al ejecutar consulta en transacción: " + ex.Message);
+                throw;
+            }
+        }
+
+        // Método para confirmar (commit) la transacción
+        public void CommitTransaccion()
+        {
+            try
+            {
+                if (transaction != null)
+                {
+                    transaction.Commit();
+                }
+            }
+            catch (OdbcException ex)
+            {
+                Console.WriteLine("Error al hacer commit de la transacción: " + ex.Message);
+                throw;
+            }
+            finally
+            {
+                CerrarConexion();
+            }
+        }
+
+        // Método para deshacer (rollback) la transacción
+        public void RollbackTransaccion()
+        {
+            try
+            {
+                if (transaction != null)
+                {
+                    transaction.Rollback();
+                }
+            }
+            catch (OdbcException ex)
+            {
+                Console.WriteLine("Error al hacer rollback de la transacción: " + ex.Message);
+                throw;
+            }
+            finally
+            {
+                CerrarConexion();
+            }
+        }
+
+        // Método para cerrar la conexión
+        private void CerrarConexion()
+        {
+            if (connection != null && connection.State == ConnectionState.Open)
+            {
+                connection.Close();
+                Console.WriteLine("Conexión cerrada después de la transacción.");
+            }
+        }
 
     }
 }
