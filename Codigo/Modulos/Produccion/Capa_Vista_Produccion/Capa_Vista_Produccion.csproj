@@ -38,7 +38,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Cierre_Produccion\Capa_Vista_Cierre_Produccion\bin\Debug\Capa_Vista_Cierre_Produccion.dll</HintPath>
     </Reference>
-    <Reference Include="Capa_Vista_Navegador">
+    <Reference Include="Capa_Vista_Explo_Implo">
+      <HintPath>..\Explo_Implo\Capa_Vista_Explo_Implo\bin\Debug\Capa_Vista_Explo_Implo.dll</HintPath>
+    </Reference>
+    <Reference Include="Capa_Vista_Lotes">
+      <HintPath>..\Lotes\Capa_Vista_Lotes\bin\Debug\Capa_Vista_Lotes.dll</HintPath>
+    </Reference>
+    <Reference Include="Capa_Vista_Mantenimiento">
+      <HintPath>..\Mantenimiento\Capa_Vista_Mantenimiento\bin\Debug\Capa_Vista_Mantenimiento.dll</HintPath>
+    </Reference>
+    <Reference Include="Capa_Vista_Maquinaria">
+      <HintPath>..\Maquinaria\Capa_Vista_Maquinaria\bin\Debug\Capa_Vista_Maquinaria.dll</HintPath>
+    </Reference>
+    <Reference Include="Capa_Vista_Navegador, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Componentes\Navegador\Capa_Vista_Navegador\bin\Debug\Capa_Vista_Navegador.dll</HintPath>
     </Reference>
     <Reference Include="Capa_Vista_Ordenes">
@@ -59,8 +72,11 @@
     <Reference Include="Capa_Vista_Sistema_Produccion">
       <HintPath>..\Sistema_Produccion\Capa_Vista_Sistema_Produccion\bin\Debug\Capa_Vista_Sistema_Produccion.dll</HintPath>
     </Reference>
+    <Reference Include="Conversiones">
+      <HintPath>..\Conversiones\Conversiones\bin\Debug\Conversiones.dll</HintPath>
+    </Reference>
     <Reference Include="Interfac_V3">
-      <HintPath>..\..\Menus\ModernGUI_V3\bin\Debug\Interfac_V3.exe</HintPath>
+      <HintPath>..\..\..\..\..\..\1. AS Todo junto\asis22k24proy2\Codigo\Modulos\Menus\ModernGUI_V3\bin\Debug\Interfac_V3.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
